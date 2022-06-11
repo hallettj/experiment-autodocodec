@@ -1,0 +1,83 @@
+# update permissions for one table
+mutation UpdateTablePermissions ($source: String! $schema: String! $table: String $role: String! $update: json) {
+  metadata {
+    sources(select: { name: $source }) {
+      tables(select: { schema: $schema, name: $table }) {
+        select_permissions(select: { role: $role }) {
+          filter(update: $update) # note this is a json type as the filter is an arbitrary object
+        }
+      }
+    }
+  }
+}
+
+# delete permissions for one table
+mutation DeleteTablePermissions ($source: String! $schema: String! $table: String $role: String!) {
+  metadata {
+    sources(select: { name: $source }) {
+      tables(select: { schema: $schema, name: $table }) {
+        select_permissions(delete: { role: $role }) { 
+          # note: no guarantee these will exist
+          role
+          filter
+        }
+      }
+    }
+  }
+}
+
+# insert permissions for one table
+mutation InsertTablePermissions ($source: String! $schema: String! $table: String $permissions: PermissionsInput!) {
+  metadata {
+    sources(select: { name: $source }) {
+      tables(select: { schema: $schema, name: $table }) {
+        select_permissions(insert: $permissions) { 
+          role
+          filter
+        }
+      }
+    }
+  }
+}
+
+input PermissionsInput {
+  role: String
+  filter: json
+}
+
+
+# when only some keys are provided in an update, other keys are not touched.
+# eg, if current state is { a: 1, b: 2 }, and update says { b: 3, c: 4 }, resulting state is { a: 1, b: 3, c: 3 }
+# this is only true at the top level, eg the above would not be true if this object is a key to another object and that object is updated instead.
+mutation UpdateTableConfig ($source: String! $schema: String! $table: String) {
+  metadata {
+    sources(select: { name: $source }) {
+      tables(select: {
+        schema: $schema,
+        name: $table
+      }
+      update: {
+        select_permissions: [
+          {
+            role: "user",
+            filter: {}
+          }
+        ]
+      }) {
+        # because the table key is not mentioned in the update, none of these change
+        table {
+          schema
+          name
+        }
+        # the select permissions array is entirely replaced 
+        select_permissions (insert: { #update inside update is applied from the top down. Update/insert inside a delete is a no-op
+          role: "anonymous",
+          filter: {}
+        }) { 
+          role
+          filter
+        }
+      }
+    }
+  }
+}

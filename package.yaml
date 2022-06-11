@@ -1,0 +1,62 @@
+name:                experiment-autodocodec
+version:             0.1.0.0
+github:              "hallettj/experiment-autodocodec"
+license:             BSD3
+author:              "Jesse Hallett"
+maintainer:          "jesse@sitr.us"
+copyright:           "Copyright: (c) 2022 Jesse Hallett"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/hallettj/experiment-autodocodec#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- aeson
+- aeson-pretty
+- autodocodec
+- autodocodec-openapi3
+- autodocodec-swagger2
+- bytestring
+- insert-ordered-containers
+- lens
+- openapi3
+- scientific
+- swagger2
+- text
+
+library:
+  source-dirs: src
+
+executables:
+  experiment-autodocodec-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - experiment-autodocodec
+
+tests:
+  experiment-autodocodec-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - experiment-autodocodec
+
+ghc-options: -Wall
