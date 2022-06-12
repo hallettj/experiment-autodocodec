@@ -21,21 +21,18 @@ description:         Please see the README on GitHub at <https://github.com/hall
 
 dependencies:
 - base >= 4.7 && < 5
-- aeson
-- aeson-pretty
-- autodocodec
-- autodocodec-openapi3
-- autodocodec-swagger2
-- bytestring
-- insert-ordered-containers
-- lens
-- openapi3
-- scientific
-- swagger2
-- text
 
 library:
   source-dirs: src
+  dependencies:
+  - aeson
+  - autodocodec
+  - autodocodec-openapi3
+  - insert-ordered-containers
+  - lens
+  - openapi3
+  - scientific
+  - text
 
 executables:
   experiment-autodocodec-exe:
@@ -47,6 +44,8 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - experiment-autodocodec
+    - aeson-pretty
+    - bytestring
 
 tests:
   experiment-autodocodec-test:
@@ -58,5 +57,9 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - experiment-autodocodec
+    - aeson
+    - autodocodec
+    - hspec
+    - text
 
 ghc-options: -Wall
