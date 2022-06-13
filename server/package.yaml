@@ -7,7 +7,6 @@ maintainer:          "jesse@sitr.us"
 copyright:           "Copyright: (c) 2022 Jesse Hallett"
 
 extra-source-files:
-- README.md
 - ChangeLog.md
 
 # Metadata used when publishing your package
@@ -35,7 +34,7 @@ library:
   - text
 
 executables:
-  experiment-autodocodec-exe:
+  generate-openapi:
     main:                Main.hs
     source-dirs:         app
     ghc-options:

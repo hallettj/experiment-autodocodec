@@ -1,0 +1,113 @@
+{
+    "components": {
+        "schemas": {
+            "ExampleV3": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "description": "list of strings"
+                    },
+                    "param": {
+                        "maximum": 9223372036854775807,
+                        "type": "number",
+                        "minimum": -9223372036854775808,
+                        "description": "some numeric option"
+                    },
+                    "version": {
+                        "type": "number",
+                        "enum": [
+                            3
+                        ]
+                    }
+                },
+                "required": [
+                    "version",
+                    "data",
+                    "param"
+                ]
+            },
+            "ExampleV1": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "text here if you want",
+                        "nullable": true
+                    },
+                    "version": {
+                        "type": "number",
+                        "enum": [
+                            1
+                        ]
+                    },
+                    "int": {
+                        "maximum": 9223372036854775807,
+                        "type": "number",
+                        "minimum": -9223372036854775808,
+                        "description": "this should be a number"
+                    }
+                },
+                "required": [
+                    "version",
+                    "text",
+                    "int"
+                ]
+            },
+            "Example": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ExampleV1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ExampleV2"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ExampleV3"
+                    }
+                ],
+                "description": "The format comes in multiple distinct versions"
+            },
+            "ExampleV2": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "text is now non-nullable"
+                    },
+                    "version": {
+                        "type": "number",
+                        "enum": [
+                            2
+                        ]
+                    },
+                    "int": {
+                        "maximum": 9223372036854775807,
+                        "type": "number",
+                        "minimum": -9223372036854775808,
+                        "description": "this should be a number"
+                    },
+                    "bool": {
+                        "type": "boolean",
+                        "description": "now there is a boolean"
+                    }
+                },
+                "required": [
+                    "version",
+                    "text",
+                    "int",
+                    "bool"
+                ]
+            }
+        }
+    },
+    "openapi": "3.0.0",
+    "paths": {},
+    "info": {
+        "version": "",
+        "title": ""
+    }
+}
